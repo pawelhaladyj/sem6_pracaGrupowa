@@ -6,6 +6,7 @@ import pl.wspa.DziopakHaladyj.pracaZaliczeniowa.mapper.LoanMapper;
 import pl.wspa.DziopakHaladyj.pracaZaliczeniowa.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,30 +20,39 @@ public class LoanController {
     private final LoanService loanService;
 
     @PostMapping
-    public LoanDTO borrowBook(@RequestBody BorrowRequest request) {
-        log.info("API: Borrow book {} by user {}", request.getBookId(), request.getUserId());
+    public ResponseEntity<LoanDTO> borrowBook(
+            @RequestHeader("authToken") String authToken,
+            @RequestBody BorrowRequest request) {
+        log.info("API: Borrow book (authToken={}, bookId={}, userId={})", authToken, request.getBookId(), request.getUserId());
         Loan loan = loanService.borrowBook(request.getUserId(), request.getBookId());
-        return LoanMapper.toDTO(loan);
+        return ResponseEntity.ok(LoanMapper.toDTO(loan));
     }
 
     @PostMapping("/{id}/return")
-    public LoanDTO returnBook(@PathVariable Long id) {
-        log.info("API: Return loan {}", id);
+    public ResponseEntity<LoanDTO> returnBook(
+            @RequestHeader("authToken") String authToken,
+            @PathVariable Long id) {
+        log.info("API: Return loan (authToken={}, loanId={})", authToken, id);
         Loan loan = loanService.returnBook(id);
-        return LoanMapper.toDTO(loan);
+        return ResponseEntity.ok(LoanMapper.toDTO(loan));
     }
 
     @GetMapping("/user/{userId}")
-    public List<LoanDTO> getLoansByUser(@PathVariable Long userId) {
-        log.info("API: Get loans for user {}", userId);
+    public ResponseEntity<List<LoanDTO>> getLoansByUser(
+            @RequestHeader("authToken") String authToken,
+            @PathVariable Long userId) {
+        log.info("API: Get loans for user (authToken={}, userId={})", authToken, userId);
         List<Loan> loans = loanService.getLoansByUser(userId);
-        return loans.stream().map(LoanMapper::toDTO).collect(Collectors.toList());
+        List<LoanDTO> dtos = loans.stream().map(LoanMapper::toDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping
-    public List<LoanDTO> getAllLoans() {
-        log.info("API: Get all loans");
+    public ResponseEntity<List<LoanDTO>> getAllLoans(
+            @RequestHeader("authToken") String authToken) {
+        log.info("API: Get all loans (authToken={})", authToken);
         List<Loan> loans = loanService.getAllLoans();
-        return loans.stream().map(LoanMapper::toDTO).collect(Collectors.toList());
+        List<LoanDTO> dtos = loans.stream().map(LoanMapper::toDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 }

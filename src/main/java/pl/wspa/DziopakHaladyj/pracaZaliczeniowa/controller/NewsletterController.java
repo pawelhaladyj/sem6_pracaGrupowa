@@ -6,6 +6,7 @@ import pl.wspa.DziopakHaladyj.pracaZaliczeniowa.mapper.NewsletterSubscriptionMap
 import pl.wspa.DziopakHaladyj.pracaZaliczeniowa.service.NewsletterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,23 +20,29 @@ public class NewsletterController {
     private final NewsletterService newsletterService;
 
     @PostMapping("/subscribe")
-    public NewsletterSubscriptionDTO subscribe(@RequestBody SubscribeRequest request) {
+    public ResponseEntity<NewsletterSubscriptionDTO> subscribe(@RequestBody SubscribeRequest request) {
         log.info("API: Subscribe email {}", request.getEmail());
         NewsletterSubscription sub = newsletterService.subscribe(request.getEmail());
-        return NewsletterSubscriptionMapper.toDTO(sub);
+        return ResponseEntity.ok(NewsletterSubscriptionMapper.toDTO(sub));
     }
 
     @DeleteMapping("/unsubscribe/{id}")
-    public String unsubscribe(@PathVariable Long id) {
-        log.info("API: Unsubscribe id {}", id);
+    public ResponseEntity<String> unsubscribe(
+            @RequestHeader("authToken") String authToken,
+            @PathVariable Long id) {
+        log.info("API: Unsubscribe (authToken={}, id={})", authToken, id);
         newsletterService.unsubscribe(id);
-        return "Unsubscribed successfully";
+        return ResponseEntity.ok("Unsubscribed successfully");
     }
 
     @GetMapping("/subscribers")
-    public List<NewsletterSubscriptionDTO> listSubscribers() {
-        log.info("API: List subscribers");
+    public ResponseEntity<List<NewsletterSubscriptionDTO>> listSubscribers(
+            @RequestHeader("authToken") String authToken) {
+        log.info("API: List subscribers (authToken={})", authToken);
         List<NewsletterSubscription> subs = newsletterService.listSubscribers();
-        return subs.stream().map(NewsletterSubscriptionMapper::toDTO).collect(Collectors.toList());
+        List<NewsletterSubscriptionDTO> dtos = subs.stream()
+                .map(NewsletterSubscriptionMapper::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 }

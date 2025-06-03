@@ -6,6 +6,7 @@ import pl.wspa.DziopakHaladyj.pracaZaliczeniowa.mapper.BookMapper;
 import pl.wspa.DziopakHaladyj.pracaZaliczeniowa.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,39 +20,51 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookDTO> getBooks(@RequestParam(required = false) String query,
-                                  @RequestParam(required = false) String genre,
-                                  @RequestParam(required = false) Integer year) {
-        log.info("API: Get books (query={}, genre={}, year={})", query, genre, year);
+    public ResponseEntity<List<BookDTO>> getBooks(
+            @RequestHeader("authToken") String authToken,
+            @RequestParam(required = false) String query,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) Integer year) {
+        log.info("API: Get books (authToken={}, query={}, genre={}, year={})", authToken, query, genre, year);
         List<Book> books = bookService.getAllBooks(query, genre, year);
-        return books.stream().map(BookMapper::toDTO).collect(Collectors.toList());
+        List<BookDTO> dtos = books.stream().map(BookMapper::toDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
-    public BookDTO getBookById(@PathVariable Long id) {
-        log.info("API: Get book by id {}", id);
+    public ResponseEntity<BookDTO> getBookById(
+            @RequestHeader("authToken") String authToken,
+            @PathVariable Long id) {
+        log.info("API: Get book by id (authToken={}, id={})", authToken, id);
         Book book = bookService.getBookById(id);
-        return BookMapper.toDTO(book);
+        return ResponseEntity.ok(BookMapper.toDTO(book));
     }
 
     @PostMapping
-    public BookDTO createBook(@RequestBody CreateBookRequest request) {
-        log.info("API: Create new book");
+    public ResponseEntity<BookDTO> createBook(
+            @RequestHeader("authToken") String authToken,
+            @RequestBody CreateBookRequest request) {
+        log.info("API: Create new book (authToken={})", authToken);
         Book book = bookService.addBook(request);
-        return BookMapper.toDTO(book);
+        return ResponseEntity.ok(BookMapper.toDTO(book));
     }
 
     @PutMapping("/{id}")
-    public BookDTO updateBook(@PathVariable Long id, @RequestBody CreateBookRequest request) {
-        log.info("API: Update book {}", id);
+    public ResponseEntity<BookDTO> updateBook(
+            @RequestHeader("authToken") String authToken,
+            @PathVariable Long id,
+            @RequestBody CreateBookRequest request) {
+        log.info("API: Update book (authToken={}, id={})", authToken, id);
         Book book = bookService.updateBook(id, request);
-        return BookMapper.toDTO(book);
+        return ResponseEntity.ok(BookMapper.toDTO(book));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable Long id) {
-        log.info("API: Delete book {}", id);
+    public ResponseEntity<String> deleteBook(
+            @RequestHeader("authToken") String authToken,
+            @PathVariable Long id) {
+        log.info("API: Delete book (authToken={}, id={})", authToken, id);
         bookService.deleteBook(id);
-        return "Book deleted successfully";
+        return ResponseEntity.ok("Book deleted successfully");
     }
 }
