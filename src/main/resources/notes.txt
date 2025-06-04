@@ -1,0 +1,13 @@
+INSERT INTO `users`
+  (`created_at`, `email`, `first_name`, `last_name`, `password`, `reset_token`, `reset_token_expiry`, `role`)
+VALUES
+  (
+    NOW(),
+    'user@example.com',
+    'John',
+    'Doe',
+    '$2b$12$huVNS1E6NmjA.3AX2VV83OoxRIX9qcX6hOp09dxZAYgSK46uf9rU.',
+    NULL,
+    NULL,
+    'CLIENT'
+  );      user@example.com:password

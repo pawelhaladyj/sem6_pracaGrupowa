@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/newsletter")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class NewsletterController {
     private final NewsletterService newsletterService;
 

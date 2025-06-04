@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Biblioteka – Praca Zaliczeniowa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Biblioteka</h1>
+    <nav>
+      <button id="show-books">Książki</button>
+      <button id="show-users">Użytkownicy</button>
+      <button id="show-loans">Wypożyczenia</button>
+      <button id="show-reservations">Rezerwacje</button>
+      <button id="show-newsletter">Newsletter</button>
+      <button id="show-reports">Statystyki</button>
+      <button id="show-login">Logowanie</button>
+      <button id="show-register">Rejestracja</button>
+      <button id="logout" style="display:none;">Wyloguj</button>
+    </nav>
+  </header>
+  <main>
+    <!-- KSIĄŻKI -->
+    <section id="books-section">
+      <input type="text" id="search" placeholder="Szukaj książki...">
+      <button id="search-btn">Szukaj</button>
+      <ul id="books-list"></ul>
+    </section>
+
+    <!-- Szczegóły książki + Akcje + Recenzje -->
+    <section id="book-details-section" style="display:none;">
+      <!-- Szczegóły i akcje renderowane dynamicznie -->
+    </section>
+
+    <!-- RECENZJE danej książki (wstrzykiwane do book-details-section) -->
+    <section id="reviews-section" style="display:none;"></section>
+
+    <!-- UŻYTKOWNICY -->
+    <section id="users-section" style="display:none;">
+      <h2>Użytkownicy</h2>
+      <ul id="users-list"></ul>
+    </section>
+    <section id="user-details-section" style="display:none;"></section>
+
+    <!-- WYPOŻYCZENIA -->
+    <section id="loans-section" style="display:none;">
+      <h2>Wypożyczenia</h2>
+      <ul id="loans-list"></ul>
+    </section>
+
+    <!-- REZERWACJE -->
+    <section id="reservations-section" style="display:none;">
+      <h2>Rezerwacje</h2>
+      <ul id="reservations-list"></ul>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="newsletter-section" style="display:none;">
+      <h2>Newsletter</h2>
+      <form id="newsletter-form">
+        <input type="email" id="newsletter-email" placeholder="Twój e-mail" required>
+        <button type="submit">Zapisz się</button>
+      </form>
+      <ul id="newsletter-list"></ul>
+    </section>
+
+    <!-- STATYSTYKI / RAPORTY -->
+    <section id="reports-section" style="display:none;"></section>
+
+    <!-- LOGOWANIE -->
+    <section id="login-section" style="display:none;">
+      <h2>Logowanie</h2>
+      <form id="login-form">
+        <input type="text" id="login-username" placeholder="E-mail" required>
+        <input type="password" id="login-password" placeholder="Hasło" required>
+        <button type="submit">Zaloguj się</button>
+      </form>
+      <div id="login-error" class="error"></div>
+    </section>
+
+    <!-- REJESTRACJA -->
+    <section id="register-section" style="display:none;">
+      <h2>Rejestracja</h2>
+      <form id="register-form">
+        <input type="text" id="register-firstname" placeholder="Imię" required>
+        <input type="text" id="register-lastname" placeholder="Nazwisko" required>
+        <input type="email" id="register-email" placeholder="E-mail" required>
+        <input type="password" id="register-password" placeholder="Hasło" required>
+        <button type="submit">Zarejestruj się</button>
+      </form>
+      <div id="register-error" class="error"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
