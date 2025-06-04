@@ -1,0 +1,16 @@
+INSERT INTO praca_grupowa.subscriptions (`email`, `subscribe_date`) VALUES
+  ('pawel@haladyj.pl',      NOW()),
+  ('user@example.com',      NOW()),
+  ('john.doe@example.com',  NOW()),
+  ('jane.smith@example.com',NOW()),
+  ('bob.johnson@example.com',NOW()),
+  ('alice.williams@example.com',NOW()),
+  ('michael.brown@example.com',NOW()),
+  ('emily.davis@example.com',NOW()),
+  ('david.miller@example.com',NOW()),
+  ('sarah.wilson@example.com',NOW()),
+  ('chris.moore@example.com',NOW()),
+  ('jessica.taylor@example.com',NOW()),
+  ('daniel.anderson@example.com',NOW()),
+  ('laura.thomas@example.com',NOW()),
+  ('matthew.jackson@example.com',NOW());

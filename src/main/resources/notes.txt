@@ -1,13 +1,37 @@
 INSERT INTO `users`
-  (`created_at`, `email`, `first_name`, `last_name`, `password`, `reset_token`, `reset_token_expiry`, `role`)
-VALUES
-  (
-    NOW(),
-    'user@example.com',
-    'John',
-    'Doe',
-    '$2b$12$huVNS1E6NmjA.3AX2VV83OoxRIX9qcX6hOp09dxZAYgSK46uf9rU.',
-    NULL,
-    NULL,
-    'CLIENT'
-  );      user@example.com:password
+      (`created_at`, `email`, `first_name`, `last_name`, `password`, `reset_token`, `reset_token_expiry`, `role`)
+    VALUES
+      (
+        NOW(),
+        'user@example.com',
+        'John',
+        'Doe',
+        '$2b$12$huVNS1E6NmjA.3AX2VV83OoxRIX9qcX6hOp09dxZAYgSK46uf9rU.',
+        NULL,
+        NULL,
+        'CLIENT'
+      );      user@example.com:password <- ADMIN
+
+
+
+      CLIENTS:
+      john.doe@example.com        : Password1!
+      jane.smith@example.com      : Password2!
+      bob.johnson@example.com     : Password3!
+      alice.williams@example.com  : Password4!
+      michael.brown@example.com   : Password5!
+      emily.davis@example.com     : Password6!
+      david.miller@example.com    : Password7!
+      sarah.wilson@example.com    : Password8!
+      chris.moore@example.com     : Password9!
+      jessica.taylor@example.com  : Password10!
+      daniel.anderson@example.com : Password11!
+      laura.thomas@example.com    : Password12!
+      matthew.jackson@example.com : Password13!
+      megan.white@example.com     : Password14!
+      andrew.harris@example.com   : Password15!
+      rachel.martin@example.com   : Password16!
+      joshua.thompson@example.com : Password17!
+      nicole.garcia@example.com   : Password18!
+      tyler.martinez@example.com  : Password19!
+      amber.robinson@example.com  : Password20!
